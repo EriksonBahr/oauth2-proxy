@@ -106,6 +106,7 @@ func newProviderDataFromConfig(providerConfig options.Provider) (*ProviderData, 
 			providerConfig.RedeemURL = endpoints.TokenURL
 			providerConfig.ProfileURL = endpoints.UserInfoURL
 			providerConfig.OIDCConfig.JwksURL = endpoints.JWKsURL
+			providerConfig.IntrospectURL = endpoints.IntrospectEndpoint
 			p.SupportedCodeChallengeMethods = pkce.CodeChallengeAlgs
 		}
 	}
@@ -115,11 +116,12 @@ func newProviderDataFromConfig(providerConfig options.Provider) (*ProviderData, 
 		dst **url.URL
 		raw string
 	}{
-		"login":    {dst: &p.LoginURL, raw: providerConfig.LoginURL},
-		"redeem":   {dst: &p.RedeemURL, raw: providerConfig.RedeemURL},
-		"profile":  {dst: &p.ProfileURL, raw: providerConfig.ProfileURL},
-		"validate": {dst: &p.ValidateURL, raw: providerConfig.ValidateURL},
-		"resource": {dst: &p.ProtectedResource, raw: providerConfig.ProtectedResource},
+		"login":      {dst: &p.LoginURL, raw: providerConfig.LoginURL},
+		"redeem":     {dst: &p.RedeemURL, raw: providerConfig.RedeemURL},
+		"profile":    {dst: &p.ProfileURL, raw: providerConfig.ProfileURL},
+		"validate":   {dst: &p.ValidateURL, raw: providerConfig.ValidateURL},
+		"resource":   {dst: &p.ProtectedResource, raw: providerConfig.ProtectedResource},
+		"introspect": {dst: &p.IntrospectURL, raw: providerConfig.IntrospectURL},
 	} {
 		var err error
 		*u.dst, err = url.Parse(u.raw)
