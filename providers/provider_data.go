@@ -194,6 +194,7 @@ func (p *ProviderData) setProviderDefaults(defaults providerDefaults) {
 	p.RedeemURL = defaultURL(p.RedeemURL, defaults.redeemURL)
 	p.ProfileURL = defaultURL(p.ProfileURL, defaults.profileURL)
 	p.ValidateURL = defaultURL(p.ValidateURL, defaults.validateURL)
+	p.IntrospectURL = defaultURL(p.IntrospectURL, nil)
 
 	if p.Scope == "" {
 		p.Scope = defaults.scope

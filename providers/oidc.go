@@ -126,14 +126,15 @@ func (p *OIDCProvider) enrichFromIntrospectURL(ctx context.Context, s *sessions.
 	params := url.Values{}
 	params.Add("token", s.AccessToken)
 	basicAuth := b64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", p.ClientID, clientSecret)))
-	logger.Printf("Requesting introspect")
 	if p.IntrospectURL == nil {
 		p.IntrospectURL = &url.URL{
 			Scheme: p.RedeemURL.Scheme,
 			Host:   p.RedeemURL.Host,
-			Path:   "/authorize/oauth2/introspect",
+			Path:   "/authorize/oauth2/v4/introspect",
 		}
 	}
+	logger.Printf("Requesting introspect from '%s'", p.IntrospectURL)
+
 	result := requests.New(p.IntrospectURL.String()).
 		WithContext(ctx).
 		WithMethod("POST").
